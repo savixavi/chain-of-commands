@@ -1,0 +1,92 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<header class="animate-in" style="animation-delay: 0.1s; display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px;">
+    <div>
+        <h1 style="font-size: 2.2rem; font-weight: 800;">Welcome back, {{ username }}</h1>
+        <p style="color: #64748b; margin-top: 5px;">Internal Node Status: <span style="color: var(--accent);">Active</span></p>
+    </div>
+    <div style="text-align: right;">
+        <span style="background: white; padding: 10px 20px; border-radius: 30px; font-weight: 600; box-shadow: 0 4px 6px rgba(0,0,0,0.02);">
+            <i class="fas fa-circle" style="color: var(--accent); font-size: 0.7rem; margin-right: 8px;"></i> HR-DB-01 Connected
+        </span>
+    </div>
+</header>
+
+<div class="stats-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 25px; margin-bottom: 40px;">
+    <div class="card animate-in" style="text-align: center; border-bottom: 4px solid var(--secondary); animation-delay: 0.2s;">
+        <i class="fas fa-umbrella-beach" style="font-size: 2.5rem; color: var(--secondary); margin-bottom: 15px;"></i>
+        <span style="font-size: 2rem; font-weight: 800; display: block;">14 Days</span>
+        <p style="color: #64748b;">Annual Leave Balance</p>
+    </div>
+    <div class="card animate-in" style="text-align: center; border-bottom: 4px solid var(--secondary); animation-delay: 0.3s;">
+        <i class="fas fa-folder-open" style="font-size: 2.5rem; color: var(--secondary); margin-bottom: 15px;"></i>
+        <span style="font-size: 2rem; font-weight: 800; display: block;">0</span>
+        <p style="color: #64748b;">Pending HR Tickets</p>
+    </div>
+    <div class="card animate-in" style="text-align: center; border-bottom: 4px solid var(--secondary); animation-delay: 0.4s;">
+        <i class="fas fa-bullhorn" style="font-size: 2.5rem; color: var(--secondary); margin-bottom: 15px;"></i>
+        <span style="font-size: 2rem; font-weight: 800; display: block;">3</span>
+        <p style="color: #64748b;">System Notices</p>
+    </div>
+</div>
+
+<div style="display: grid; grid-template-columns: 1.8fr 1.2fr; gap: 30px;" class="animate-in" style="animation-delay: 0.5s;">
+    <div class="card">
+        <h3 style="margin-bottom: 20px;"><i class="fas fa-chart-line" style="color: var(--secondary); margin-right: 10px;"></i> Performance Metrics</h3>
+        <canvas id="growthChart" height="140"></canvas>
+    </div>
+    <div class="card">
+        <h3 style="margin-bottom: 20px;"><i class="fas fa-list-check" style="color: var(--accent); margin-right: 10px;"></i> Pending Tasks</h3>
+        <div style="display: flex; flex-direction: column; gap: 15px;">
+            <div style="display: flex; align-items: center; gap: 15px; padding: 15px; background: #f1f5f9; border-radius: 10px;">
+                <i class="fas fa-file-contract" style="color: var(--secondary);"></i>
+                <div>
+                    <div style="font-weight: 600; font-size: 0.9rem;">Internal Policy Review</div>
+                    <div style="font-size: 0.8rem; color: #64748b;">Required before Q1</div>
+                </div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 15px; padding: 15px; background: #f1f5f9; border-radius: 10px;">
+                <i class="fas fa-user-pen" style="color: var(--accent);"></i>
+                <div>
+                    <div style="font-weight: 600; font-size: 0.9rem;">Update Contact Info</div>
+                    <div style="font-size: 0.8rem; color: #64748b;">Last updated 324 days ago</div>
+                </div>
+            </div>
+            <p style="font-size: 0.85rem; color: #64748b; padding: 10px; line-height: 1.5;">
+                For assistance with records or directory lookups, please consult the system assistant.
+            </p>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const ctx = document.getElementById('growthChart').getContext('2d');
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ['Q1', 'Q2', 'Q3', 'Q4'],
+            datasets: [{
+                label: 'Team Growth %',
+                data: [78, 85, 82, 94],
+                borderColor: '#3b82f6',
+                backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                fill: true,
+                tension: 0.4
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: { legend: { display: false } },
+            scales: { y: { beginAtZero: true, grid: { display: false } }, x: { grid: { display: false } } }
+        }
+    });
+
+    // CRITICAL: This triggers the fadeInUp animations!
+    document.querySelectorAll('.animate-in').forEach((el, i) => {
+        el.style.animationDelay = `${(i + 1) * 0.1}s`;
+    });
+</script>
+
+{% endblock %}
